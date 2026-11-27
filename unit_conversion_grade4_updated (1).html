@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun with Units | Grade 4</title>
+<style>
+:root{--ink:#26364d;--blue:#2878d0;--green:#16834e;--red:#c93636;--orange:#f3a43b;--pale:#f3f8ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#eaf4ff,#fff7e8)}
+header{text-align:center;padding:26px 15px 22px;background:#fff;border-bottom:4px solid #dceaff}
+h1{margin:0 0 8px;color:#185ca5;font-size:clamp(1.8rem,5vw,2.7rem)}
+header p{margin:0;font-size:1.08rem}
+main{max-width:1050px;margin:auto;padding:20px 15px 45px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0 20px}
+button,.tab{border:0;border-radius:13px;padding:11px 15px;font-weight:700;font-size:1rem;cursor:pointer;background:#e4efff;color:#174d86}
+button:hover,.tab:hover{filter:brightness(.96);transform:translateY(-1px)}
+.tab.active{background:var(--blue);color:white}
+.panel{display:none;background:#fff;border-radius:22px;padding:22px;box-shadow:0 8px 24px #23466b16;margin-bottom:18px}
+.panel.active{display:block}
+h2{margin-top:0;color:#185ca5}h3{margin-bottom:8px}
+.rule{background:#fff5d9;border-left:6px solid var(--orange);padding:14px 16px;border-radius:12px;margin:15px 0;font-size:1.08rem}
+.visual{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;margin:22px 0}
+.tile{min-width:140px;text-align:center;border-radius:18px;padding:17px 14px;background:#edf5ff;border:2px solid #c9e0ff}
+.tile .emoji{font-size:2.5rem;display:block}.tile strong{display:block;font-size:1.5rem;margin-top:5px}
+.arrow{font-size:2rem;color:var(--orange);font-weight:bold}
+.controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:14px 0}
+input,select{font:inherit;padding:11px 12px;border:2px solid #cbd9eb;border-radius:10px;max-width:100%}
+input{width:150px}select{width:auto}
+.primary{background:var(--green);color:#fff}.secondary{background:#fff0dc;color:#89500c}
+.answer{min-height:30px;font-weight:700;margin-top:10px;font-size:1.04rem}
+.good{color:var(--green)}.try{color:var(--red)}
+.practice-card{background:#f7faff;border:1px solid #dce9fa;border-radius:16px;padding:15px;margin:13px 0}
+.question{font-size:1.1rem;font-weight:700}
+.small{color:#52657e;font-size:.95rem}
+.progress{height:12px;background:#e8edf5;border-radius:20px;overflow:hidden;margin:12px 0}
+.bar{height:100%;width:0%;background:linear-gradient(90deg,#2da66c,#8bd45d);transition:width .3s}
+.score-summary{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:#eef6ff;padding:12px 15px;border-radius:14px}
+.score-pill{font-weight:800;font-size:1.08rem}
+.mark{display:inline-flex;align-items:center;justify-content:center;min-width:76px;padding:7px 12px;border-radius:10px;font-weight:800}
+.mark.correct{background:#dff5e8;color:#126b3d;border:1px solid #8bd5aa}
+.mark.wrong{background:#ffe5e5;color:#a82020;border:1px solid #f1a1a1}
+.mark.pending{background:#edf0f5;color:#5b6574}
+.animation-area{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;padding:18px;background:#f6faff;border-radius:18px;margin:18px 0}
+.animated-card{width:210px;text-align:center;padding:12px}
+.bounce{font-size:58px;display:inline-block;animation:bounce 1.8s infinite ease-in-out}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+.pour{width:56px;height:100px;border:4px solid #4288c9;border-radius:9px 9px 16px 16px;margin:8px auto;position:relative;overflow:hidden;background:#fff}
+.pour:after{content:"";position:absolute;bottom:0;left:0;width:100%;height:65%;background:#70c9ef;animation:fill 3s infinite ease-in-out;transform-origin:bottom}
+@keyframes fill{0%,100%{height:25%}50%{height:85%}}
+.weight{font-size:52px;display:inline-block;animation:tilt 2s infinite ease-in-out}
+@keyframes tilt{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+footer{text-align:center;padding:12px;color:#61718a}
+@media(max-width:560px){.panel{padding:16px}.tile{min-width:120px}.animated-card{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌟 Fun with Units! 🌟</h1>
+  <p>Let’s explore kilograms, grams, litres and millilitres.</p>
+</header>
+<main>
+<nav class="tabs" aria-label="Learning sections">
+  <button class="tab active" data-tab="home">🏠 Home</button>
+  <button class="tab" data-tab="learn">📘 Learn</button>
+  <button class="tab" data-tab="kg">⚖️ Mass</button>
+  <button class="tab" data-tab="litre">💧 Capacity</button>
+  <button class="tab" data-tab="practice">✏️ Practice</button>
+</nav>
+
+<section id="home" class="panel active">
+  <h2>Welcome, Unit Explorer!</h2>
+  <p>We use <b>kilograms and grams</b> to measure how heavy something is. We use <b>litres and millilitres</b> to measure how much liquid a container can hold.</p>
+  <div class="animation-area">
+    <div class="animated-card">
+      <div class="weight">⚖️</div>
+      <h3>Mass</h3><p>Heavy or light?</p>
+      <div class="bounce">🍉</div>
+      <p class="small">A watermelon can be measured in kilograms.</p>
+    </div>
+    <div class="animated-card">
+      <div class="pour"></div>
+      <h3>Capacity</h3><p>How much liquid?</p>
+      <div class="bounce">🧃</div>
+      <p class="small">Juice in a bottle can be measured in litres or millilitres.</p>
+    </div>
+  </div>
+  <div class="rule"><b>Two magic facts to remember:</b><br>1 kg = 1,000 g<br>1 L = 1,000 mL</div>
+  <p>Watch the liquid fill the bottle and the weighing scale gently move. These little animations help us remember what we measure!</p>
+  <button class="primary" onclick="showTab('learn')">Let’s start learning →</button>
+</section>
+
+<section id="learn" class="panel">
+  <h2>📘 The big idea</h2>
+  <div class="rule"><b>Bigger unit → smaller unit:</b> multiply by 1,000.<br>Example: 2 kg = 2 × 1,000 = <b>2,000 g</b></div>
+  <div class="rule"><b>Smaller unit → bigger unit:</b> divide by 1,000.<br>Example: 2,000 mL = 2,000 ÷ 1,000 = <b>2 L</b></div>
+  <p><b>Mixed measurements:</b> Change each part into the smaller unit, then add.</p>
+  <div class="rule"><b>Example:</b> 3 kg 250 g into grams<br>3 kg = 3,000 g<br>3,000 g + 250 g = <b>3,250 g</b></div>
+  <div class="rule"><b>Example:</b> 5 L 30 mL into millilitres<br>5 L = 5,000 mL<br>5,000 mL + 30 mL = <b>5,030 mL</b></div>
+</section>
+
+<section id="kg" class="panel">
+  <h2>⚖️ Kilograms and grams</h2>
+  <p>Kilograms are useful for heavier things. Grams are useful for lighter things.</p>
+  <div class="visual"><div class="tile"><span class="emoji">🍚</span><strong>1 kg</strong><span>of rice</span></div><div class="arrow">=</div><div class="tile"><span class="emoji">⚖️</span><strong>1,000 g</strong><span>of rice</span></div></div>
+  <div class="rule"><b>Try these:</b><br>4 kg = 4,000 g<br>2,500 g = 2.5 kg<br>3 kg 250 g = 3,250 g</div>
+  <h3>Try the converter</h3>
+  <div class="controls"><input id="kgValue" type="number" min="0" step="any" value="2" aria-label="Enter amount"><select id="kgDirection"><option value="kg-g">kg → g</option><option value="g-kg">g → kg</option></select><button class="primary" onclick="convert('kg')">Convert</button></div>
+  <div id="kgResult" class="answer" aria-live="polite">2 kg = 2,000 g</div>
+</section>
+
+<section id="litre" class="panel">
+  <h2>💧 Litres and millilitres</h2>
+  <p>Litres are useful for larger amounts of liquid. Millilitres are useful for smaller amounts.</p>
+  <div class="visual"><div class="tile"><span class="emoji">🥛</span><strong>1 L</strong><span>of milk</span></div><div class="arrow">=</div><div class="tile"><span class="emoji">💧</span><strong>1,000 mL</strong><span>of milk</span></div></div>
+  <div class="rule"><b>Try these:</b><br>4 L = 4,000 mL<br>2,500 mL = 2.5 L<br>5 L 30 mL = 5,030 mL</div>
+  <h3>Try the converter</h3>
+  <div class="controls"><input id="litreValue" type="number" min="0" step="any" value="1.5" aria-label="Enter amount"><select id="litreDirection"><option value="L-mL">L → mL</option><option value="mL-L">mL → L</option></select><button class="primary" onclick="convert('litre')">Convert</button></div>
+  <div id="litreResult" class="answer" aria-live="polite">1.5 L = 1,500 mL</div>
+</section>
+
+<section id="practice" class="panel">
+  <h2>✏️ Practice time!</h2>
+  <p>Type the number only. The unit is shown beside the answer box. Each correct answer earns <b>1 mark</b>. A wrong answer earns <b>0 marks</b>.</p>
+  <div class="score-summary"><span class="score-pill" id="scoreText">Total: 0 / 10 marks</span><span class="small">Green = 1 mark · Red = 0 marks</span></div>
+  <div class="progress"><div id="progressBar" class="bar"></div></div>
+  <div id="questions"></div>
+  <button class="secondary" onclick="resetPractice()">🔄 Start again</button>
+</section>
+</main>
+<footer>Keep practising — you are a Unit Conversion Star! ⭐</footer>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+tabs.forEach(btn=>btn.addEventListener('click',()=>showTab(btn.dataset.tab)));
+function showTab(id){
+  tabs.forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));
+}
+function nice(n){return Number(n.toFixed(4)).toLocaleString('en-IN',{maximumFractionDigits:4});}
+function convert(kind){
+  const field=document.getElementById(kind+'Value'),value=Number(field.value);
+  const direction=document.getElementById(kind+'Direction').value,output=document.getElementById(kind+'Result');
+  if(field.value===''||!Number.isFinite(value)||value<0){output.textContent='Please enter a number that is zero or greater.';output.className='answer try';return;}
+  let result,from,to;
+  if(direction==='kg-g'){result=value*1000;from='kg';to='g';}
+  else if(direction==='g-kg'){result=value/1000;from='g';to='kg';}
+  else if(direction==='L-mL'){result=value*1000;from='L';to='mL';}
+  else{result=value/1000;from='mL';to='L';}
+  output.textContent=`${nice(value)} ${from} = ${nice(result)} ${to}`;output.className='answer good';
+}
+const quiz=[
+ {q:'Change 5 kg into grams.',a:5000,unit:'g',hint:'Multiply 5 by 1,000.'},
+ {q:'Change 3,000 g into kilograms.',a:3,unit:'kg',hint:'Divide 3,000 by 1,000.'},
+ {q:'Change 2 L into millilitres.',a:2000,unit:'mL',hint:'Multiply 2 by 1,000.'},
+ {q:'Change 4,000 mL into litres.',a:4,unit:'L',hint:'Divide 4,000 by 1,000.'},
+ {q:'Convert 3 kg 250 g into grams.',a:3250,unit:'g',hint:'3 kg = 3,000 g. Then add 250 g.'},
+ {q:'Convert 5 L 30 mL into millilitres.',a:5030,unit:'mL',hint:'5 L = 5,000 mL. Then add 30 mL.'},
+ {q:'A bag has 2 kg 500 g of flour. How many grams is that?',a:2500,unit:'g',hint:'2,000 g + 500 g.'},
+ {q:'A jug has 1 L 250 mL of water. How many millilitres is that?',a:1250,unit:'mL',hint:'1,000 mL + 250 mL.'},
+ {q:'Change 7,500 g into kilograms.',a:7.5,unit:'kg',hint:'7,500 ÷ 1,000.'},
+ {q:'Change 2,750 mL into litres.',a:2.75,unit:'L',hint:'2,750 ÷ 1,000.'}
+];
+let marks=Array(quiz.length).fill(null);
+function renderQuiz(){
+ const holder=document.getElementById('questions');holder.innerHTML='';
+ quiz.forEach((item,i)=>{
+  const card=document.createElement('div');card.className='practice-card';
+  card.innerHTML=`<div class="question">${i+1}. ${item.q}</div>
+   <div class="controls"><input type="number" min="0" step="any" id="ans${i}" placeholder="Your answer" aria-label="Answer to question ${i+1}">
+   <b>${item.unit}</b><button class="primary" id="check${i}">Check</button>
+   <span class="mark pending" id="mark${i}">— mark</span></div>
+   <div class="answer" id="feedback${i}" aria-live="polite"></div>`;
+  holder.appendChild(card);
+  document.getElementById('check'+i).addEventListener('click',()=>checkAnswer(i));
+ });
+ updateScore();
+}
+function checkAnswer(i){
+ const field=document.getElementById('ans'+i),feedback=document.getElementById('feedback'+i),mark=document.getElementById('mark'+i);
+ if(field.value===''){feedback.textContent='Please type your answer first.';feedback.className='answer try';return;}
+ const correct=Math.abs(Number(field.value)-quiz[i].a)<0.000001;
+ marks[i]=correct?1:0;
+ if(correct){feedback.textContent='🎉 Correct! Excellent work!';feedback.className='answer good';mark.textContent='1 mark';mark.className='mark correct';}
+ else{feedback.textContent='Not quite. Hint: '+quiz[i].hint;feedback.className='answer try';mark.textContent='0 marks';mark.className='mark wrong';}
+ updateScore();
+}
+function updateScore(){
+ const total=marks.reduce((sum,m)=>sum+(m===1?1:0),0);
+ document.getElementById('scoreText').textContent=`Total: ${total} / ${quiz.length} marks`;
+ document.getElementById('progressBar').style.width=(total/quiz.length*100)+'%';
+}
+function resetPractice(){marks=Array(quiz.length).fill(null);renderQuiz();}
+renderQuiz();
+</script>
+</body>
+</html>
