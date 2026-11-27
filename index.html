@@ -1,0 +1,999 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fun with Units - Grade 4</title>
+
+<style>
+:root {
+ --blue:#2878d0;
+ --green:#16834e;
+ --red:#c93636;
+ --ink:#26364d;
+}
+
+* { box-sizing:border-box; }
+
+body {
+ margin:0;
+ font-family:Arial,sans-serif;
+ color:var(--ink);
+ background:linear-gradient(135deg,#eaf4ff,#fff7e8);
+}
+
+header {
+ text-align:center;
+ background:white;
+ padding:24px;
+ border-bottom:4px solid #dceaff;
+}
+
+h1,h2 { color:#185ca5; }
+
+main {
+ max-width:1050px;
+ margin:auto;
+ padding:18px;
+}
+
+.tabs,.controls {
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ align-items:center;
+ margin:12px 0;
+}
+
+button {
+ border:0;
+ border-radius:10px;
+ padding:11px 15px;
+ background:#e4efff;
+ color:#174d86;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+button.primary {
+ background:var(--green);
+ color:white;
+}
+
+button:disabled { opacity:.5; }
+
+.tab.active {
+ background:var(--blue);
+ color:white;
+}
+
+.panel {
+ display:none;
+ background:white;
+ border-radius:18px;
+ padding:20px;
+ margin:14px 0;
+ box-shadow:0 5px 20px #23466b16;
+}
+
+.panel.active { display:block; }
+
+.rule,.card {
+ background:#f3f8ff;
+ border-radius:13px;
+ padding:14px;
+ margin:12px 0;
+}
+
+.rule {
+ border-left:5px solid #f3a43b;
+ background:#fff5d9;
+}
+
+input {
+ padding:10px;
+ border:2px solid #cbd9eb;
+ border-radius:9px;
+ font-size:1rem;
+ width:180px;
+}
+
+select {
+ padding:10px;
+ border-radius:9px;
+}
+
+.answer {
+ font-weight:bold;
+ min-height:26px;
+ margin:8px 0;
+}
+
+.good { color:var(--green); }
+.bad { color:var(--red); }
+
+.score {
+ background:#eef6ff;
+ padding:12px;
+ border-radius:12px;
+ font-weight:bold;
+}
+
+.mark {
+ padding:6px 10px;
+ border-radius:8px;
+ font-weight:bold;
+}
+
+.correct {
+ background:#dff5e8;
+ color:#126b3d;
+}
+
+.wrong {
+ background:#ffe5e5;
+ color:#a82020;
+}
+
+.pending { background:#edf0f5; }
+
+.progress {
+ height:12px;
+ background:#e8edf5;
+ border-radius:20px;
+ overflow:hidden;
+ margin:12px 0;
+}
+
+.bar {
+ height:100%;
+ width:0;
+ background:#36a66a;
+ transition:width .3s;
+}
+
+.demo-grid {
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+ gap:14px;
+}
+
+.demo {
+ background:#f3f8ff;
+ border-radius:14px;
+ padding:16px;
+ text-align:center;
+}
+
+.big {
+ font-size:48px;
+}
+
+.bounce {
+ display:inline-block;
+ animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+ 50% { transform:translateY(-12px); }
+}
+
+.jar {
+ height:120px;
+ width:75px;
+ border:4px solid #4288c9;
+ border-top:0;
+ border-radius:0 0 12px 12px;
+ margin:12px auto;
+ position:relative;
+ overflow:hidden;
+ background:white;
+}
+
+.water {
+ position:absolute;
+ bottom:0;
+ width:100%;
+ height:0;
+ background:#69c9ee;
+ transition:height .6s;
+}
+
+.certificate {
+ display:none;
+ text-align:center;
+ background:#fffdf5;
+ border:8px double #c69b35;
+ border-radius:14px;
+ padding:28px;
+ margin:18px 0;
+}
+
+.certificate h2 {
+ color:#9b741e;
+ font-family:Georgia,serif;
+}
+
+.student {
+ font-size:30px;
+ color:#185ca5;
+ font-weight:bold;
+ border-bottom:2px solid #c69b35;
+ display:inline-block;
+ padding:8px 24px;
+}
+
+footer {
+ text-align:center;
+ padding:20px;
+ color:#61718a;
+}
+
+@media print {
+ body { background:white; }
+ header,.tabs,footer,.no-print {
+  display:none!important;
+ }
+ main { padding:0; }
+ .panel { display:none!important; }
+ #certificatePanel {
+  display:block!important;
+  box-shadow:none;
+ }
+ .certificate {
+  display:flex!important;
+  flex-direction:column;
+  justify-content:center;
+  min-height:90vh;
+  page-break-inside:avoid;
+ }
+}
+
+@media(prefers-reduced-motion:reduce) {
+ * {
+  animation:none!important;
+  transition:none!important;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌟 Fun with Units! 🌟</h1>
+<p>Explore kilograms, grams, litres and millilitres.</p>
+</header>
+
+<main>
+
+<nav class="tabs">
+<button class="tab active" data-tab="home">🏠 Home</button>
+<button class="tab" data-tab="learn">📘 Learn</button>
+<button class="tab" data-tab="mass">⚖️ Mass</button>
+<button class="tab" data-tab="capacity">💧 Capacity</button>
+<button class="tab" data-tab="animations">🎬 Interactive Lessons</button>
+<button class="tab" data-tab="test">✏️ Test</button>
+<button class="tab" data-tab="certificatePanel">🏅 Certificate</button>
+</nav>
+
+<!-- HOME -->
+
+<section id="home" class="panel active">
+
+<h2>Welcome, Unit Explorer!</h2>
+
+<p>
+We measure how heavy something is using kilograms and grams.
+We measure how much liquid a container holds using litres and millilitres.
+</p>
+
+<div class="demo-grid">
+
+<div class="demo">
+<div class="big bounce">⚖️🍉</div>
+<h3>Mass</h3>
+<p>How heavy is it?</p>
+</div>
+
+<div class="demo">
+<div class="big bounce">🧃💧</div>
+<h3>Capacity</h3>
+<p>How much liquid can it hold?</p>
+</div>
+
+</div>
+
+<div class="rule">
+<b>Remember these facts:</b><br>
+1 kg = 1,000 g<br>
+1 L = 1,000 mL
+</div>
+
+<p>
+Explore the lessons, practise the conversions and complete the test to earn your certificate.
+</p>
+
+<button class="primary" onclick="showTab('animations')">
+Explore animations →
+</button>
+
+</section>
+
+<!-- LEARNING RULES -->
+
+<section id="learn" class="panel">
+
+<h2>📘 Learn the rules</h2>
+
+<div class="rule">
+<b>Bigger unit to smaller unit:</b><br>
+Multiply by 1,000.<br>
+2 kg = 2 × 1,000 = <b>2,000 g</b>
+</div>
+
+<div class="rule">
+<b>Smaller unit to bigger unit:</b><br>
+Divide by 1,000.<br>
+2,000 mL = 2,000 ÷ 1,000 = <b>2 L</b>
+</div>
+
+<h3>Combined measurements</h3>
+
+<div class="rule">
+<b>3 kg 250 g into grams:</b><br>
+3 kg = 3,000 g<br>
+3,000 + 250 = <b>3,250 g</b>
+</div>
+
+<div class="rule">
+<b>5 L 30 mL into millilitres:</b><br>
+5 L = 5,000 mL<br>
+5,000 + 30 = <b>5,030 mL</b>
+</div>
+
+</section>
+
+<!-- MASS -->
+
+<section id="mass" class="panel">
+
+<h2>⚖️ Kilograms and grams</h2>
+
+<p>We use kilograms for heavier things and grams for lighter things.</p>
+
+<div class="rule">
+1 kg = 1,000 g<br>
+3 kg 250 g = 3,250 g
+</div>
+
+<h3>Try the converter</h3>
+
+<div class="controls">
+
+<input id="massValue" type="number"
+min="0" step="any" value="2">
+
+<select id="massDirection">
+<option value="kg-g">kg → g</option>
+<option value="g-kg">g → kg</option>
+</select>
+
+<button class="primary" onclick="convert('mass')">
+Convert
+</button>
+
+</div>
+
+<div id="massResult" class="answer">
+2 kg = 2,000 g
+</div>
+
+</section>
+
+<!-- CAPACITY -->
+
+<section id="capacity" class="panel">
+
+<h2>💧 Litres and millilitres</h2>
+
+<p>
+We use litres for larger amounts of liquid and millilitres for smaller amounts.
+</p>
+
+<div class="rule">
+1 L = 1,000 mL<br>
+5 L 30 mL = 5,030 mL
+</div>
+
+<h3>Try the converter</h3>
+
+<div class="controls">
+
+<input id="capacityValue" type="number"
+min="0" step="any" value="1.5">
+
+<select id="capacityDirection">
+<option value="L-mL">L → mL</option>
+<option value="mL-L">mL → L</option>
+</select>
+
+<button class="primary" onclick="convert('capacity')">
+Convert
+</button>
+
+</div>
+
+<div id="capacityResult" class="answer">
+1.5 L = 1,500 mL
+</div>
+
+</section>
+
+<!-- INTERACTIVE ANIMATIONS -->
+
+<section id="animations" class="panel">
+
+<h2>🎬 Interactive animated lessons</h2>
+
+<p>
+Press "Next step" to see how each conversion works.
+These animations are built into the webpage and work offline.
+</p>
+
+<div class="demo-grid">
+
+<div class="demo">
+<h3>Lesson 1: kg to g</h3>
+<div class="big">⚖️</div>
+
+<p id="massLesson">
+1 kilogram is equal to 1,000 grams.
+</p>
+
+<button class="primary"
+onclick="nextLesson('massLesson')">
+Next step
+</button>
+
+<button onclick="resetLesson('massLesson')">
+Start again
+</button>
+</div>
+
+<div class="demo">
+<h3>Lesson 2: L to mL</h3>
+
+<div class="jar">
+<div class="water" id="water"></div>
+</div>
+
+<p id="liquidLesson">
+1 litre is equal to 1,000 millilitres.
+</p>
+
+<button class="primary"
+onclick="nextLesson('liquidLesson')">
+Next step
+</button>
+
+<button onclick="resetLesson('liquidLesson')">
+Start again
+</button>
+</div>
+
+<div class="demo">
+<h3>Lesson 3: Mixed units</h3>
+
+<div class="big">🍚</div>
+
+<p id="mixedLesson">
+Convert 3 kg 250 g into grams.
+</p>
+
+<button class="primary"
+onclick="nextLesson('mixedLesson')">
+Next step
+</button>
+
+<button onclick="resetLesson('mixedLesson')">
+Start again
+</button>
+</div>
+
+</div>
+
+<div class="rule">
+These are interactive animations, not recorded video clips.
+They need no external video service or internet connection.
+</div>
+
+</section>
+
+<!-- TEST -->
+
+<section id="test" class="panel">
+
+<h2>✏️ Unit Conversion Test</h2>
+
+<p>
+Enter your name, answer all 10 questions and check each answer.
+Correct answers earn 1 mark; wrong answers earn 0 marks.
+</p>
+
+<div class="controls">
+
+<label for="studentName"><b>Student name:</b></label>
+
+<input id="studentName" maxlength="50"
+placeholder="Enter your name">
+
+</div>
+
+<div class="score" id="score">
+Score: 0 / 10
+</div>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div id="questions"></div>
+
+<button class="primary" onclick="finishTest()">
+Finish test
+</button>
+
+<button onclick="resetTest()">
+Start again
+</button>
+
+<div class="answer" id="testMessage"></div>
+
+</section>
+
+<!-- CERTIFICATE -->
+
+<section id="certificatePanel" class="panel">
+
+<h2>🏅 Your certificate</h2>
+
+<p class="no-print">
+Complete and check all 10 test questions to unlock your certificate.
+</p>
+
+<div id="certificate" class="certificate">
+
+<div class="big">🏅⭐🏅</div>
+
+<h2>Certificate of Achievement</h2>
+
+<p>This certificate is proudly presented to</p>
+
+<div class="student" id="certName">
+Student Name
+</div>
+
+<p>for completing the</p>
+
+<h3>GRADE 4 UNIT CONVERSION CHALLENGE</h3>
+
+<p>
+in kilograms, grams, litres and millilitres.
+</p>
+
+<h2 id="certScore">Score: 0 / 10</h2>
+
+<p id="certDate"></p>
+
+<p>🌟 Keep learning and shining! 🌟</p>
+
+</div>
+
+<div class="no-print">
+
+<button class="primary" id="printBtn"
+onclick="window.print()" disabled>
+Print / Save certificate as PDF
+</button>
+
+<p id="certStatus">
+Your certificate will appear after the test is completed.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+Keep practising — you are a Unit Conversion Star! ⭐
+</footer>
+
+<script>
+
+// NAVIGATION
+
+const tabs = document.querySelectorAll('.tab');
+
+tabs.forEach(b => {
+ b.addEventListener('click', () => showTab(b.dataset.tab));
+});
+
+function showTab(id) {
+ tabs.forEach(b =>
+  b.classList.toggle('active', b.dataset.tab === id)
+ );
+
+ document.querySelectorAll('.panel').forEach(p =>
+  p.classList.toggle('active', p.id === id)
+ );
+}
+
+// NUMBER FORMATTING
+
+function fmt(n) {
+ return Number(n.toFixed(4)).toLocaleString('en-IN',{
+  maximumFractionDigits:4
+ });
+}
+
+// UNIT CONVERTER
+
+function convert(kind) {
+
+ const field = document.getElementById(kind+'Value');
+ const v = Number(field.value);
+ const dir = document.getElementById(kind+'Direction').value;
+ const out = document.getElementById(kind+'Result');
+
+ if(field.value === '' || !Number.isFinite(v) || v < 0) {
+  out.textContent = 'Please enter a valid number.';
+  out.className = 'answer bad';
+  return;
+ }
+
+ let answer,from,to;
+
+ if(dir === 'kg-g') {
+  answer = v * 1000;
+  from = 'kg';
+  to = 'g';
+ }
+ else if(dir === 'g-kg') {
+  answer = v / 1000;
+  from = 'g';
+  to = 'kg';
+ }
+ else if(dir === 'L-mL') {
+  answer = v * 1000;
+  from = 'L';
+  to = 'mL';
+ }
+ else {
+  answer = v / 1000;
+  from = 'mL';
+  to = 'L';
+ }
+
+ out.textContent =
+  `${fmt(v)} ${from} = ${fmt(answer)} ${to}`;
+
+ out.className = 'answer good';
+}
+
+// INTERACTIVE LESSONS
+
+const lessons = {
+
+ massLesson: [
+  '1 kilogram is equal to 1,000 grams.',
+  'To change kilograms into grams, multiply by 1,000.',
+  'For 3 kg: 3 × 1,000 = 3,000 g.',
+  'Add 250 g: 3,000 + 250 = 3,250 g!'
+ ],
+
+ liquidLesson: [
+  '1 litre is equal to 1,000 millilitres.',
+  'To change litres into millilitres, multiply by 1,000.',
+  'For 5 L: 5 × 1,000 = 5,000 mL.',
+  'Add 30 mL: 5,000 + 30 = 5,030 mL!'
+ ],
+
+ mixedLesson: [
+  'Convert 3 kg 250 g into grams.',
+  'First change 3 kg into grams: 3 × 1,000 = 3,000 g.',
+  'Now add the remaining 250 g.',
+  '3,000 + 250 = 3,250 grams. Well done!'
+ ]
+
+};
+
+const lessonIndex = {
+ massLesson:0,
+ liquidLesson:0,
+ mixedLesson:0
+};
+
+function nextLesson(id) {
+
+ lessonIndex[id] =
+  (lessonIndex[id] + 1) % lessons[id].length;
+
+ document.getElementById(id).textContent =
+  lessons[id][lessonIndex[id]];
+
+ if(id === 'liquidLesson') {
+  document.getElementById('water').style.height =
+   (25 + lessonIndex[id] * 23) + '%';
+ }
+}
+
+function resetLesson(id) {
+
+ lessonIndex[id] = 0;
+
+ document.getElementById(id).textContent =
+  lessons[id][0];
+
+ if(id === 'liquidLesson') {
+  document.getElementById('water').style.height = '0';
+ }
+}
+
+// QUIZ QUESTIONS
+
+const quiz = [
+
+ {
+  q:'Change 5 kg into grams.',
+  a:5000,u:'g',
+  h:'Multiply 5 by 1,000.'
+ },
+
+ {
+  q:'Change 3,000 g into kilograms.',
+  a:3,u:'kg',
+  h:'Divide 3,000 by 1,000.'
+ },
+
+ {
+  q:'Change 2 L into millilitres.',
+  a:2000,u:'mL',
+  h:'Multiply 2 by 1,000.'
+ },
+
+ {
+  q:'Change 4,000 mL into litres.',
+  a:4,u:'L',
+  h:'Divide 4,000 by 1,000.'
+ },
+
+ {
+  q:'Convert 3 kg 250 g into grams.',
+  a:3250,u:'g',
+  h:'3,000 g + 250 g.'
+ },
+
+ {
+  q:'Convert 5 L 30 mL into millilitres.',
+  a:5030,u:'mL',
+  h:'5,000 mL + 30 mL.'
+ },
+
+ {
+  q:'A bag has 2 kg 500 g of flour. How many grams?',
+  a:2500,u:'g',
+  h:'2,000 g + 500 g.'
+ },
+
+ {
+  q:'A jug has 1 L 250 mL of water. How many millilitres?',
+  a:1250,u:'mL',
+  h:'1,000 mL + 250 mL.'
+ },
+
+ {
+  q:'Change 7,500 g into kilograms.',
+  a:7.5,u:'kg',
+  h:'7,500 ÷ 1,000.'
+ },
+
+ {
+  q:'Change 2,750 mL into litres.',
+  a:2.75,u:'L',
+  h:'2,750 ÷ 1,000.'
+ }
+
+];
+
+let marks = Array(quiz.length).fill(null);
+
+// DISPLAY QUESTIONS
+
+function renderQuiz() {
+
+ const area = document.getElementById('questions');
+
+ area.innerHTML = '';
+
+ quiz.forEach((q,i) => {
+
+  const div = document.createElement('div');
+
+  div.className = 'card';
+
+  div.innerHTML = `
+   <div><b>${i+1}. ${q.q}</b></div>
+
+   <div class="controls">
+
+    <input type="number" step="any"
+    min="0" id="answer${i}"
+    placeholder="Your answer">
+
+    <b>${q.u}</b>
+
+    <button class="primary" id="check${i}">
+    Check
+    </button>
+
+    <span id="mark${i}" class="mark pending">
+    Not checked
+    </span>
+
+   </div>
+
+   <div id="feedback${i}" class="answer"></div>
+  `;
+
+  area.appendChild(div);
+
+  document.getElementById('check'+i)
+   .addEventListener('click',() => check(i));
+
+ });
+
+ updateScore();
+}
+
+// CHECK ANSWER
+
+function check(i) {
+
+ const f = document.getElementById('answer'+i);
+ const msg = document.getElementById('feedback'+i);
+ const badge = document.getElementById('mark'+i);
+
+ if(f.value === '') {
+  msg.textContent = 'Please enter an answer first.';
+  msg.className = 'answer bad';
+  return;
+ }
+
+ const ok =
+  Math.abs(Number(f.value)-quiz[i].a) < 0.000001;
+
+ marks[i] = ok ? 1 : 0;
+
+ if(ok) {
+
+  msg.textContent = '🎉 Correct! Well done!';
+  msg.className = 'answer good';
+
+  badge.textContent = '1 mark';
+  badge.className = 'mark correct';
+
+ }
+ else {
+
+  msg.textContent = 'Not quite. Hint: ' + quiz[i].h;
+  msg.className = 'answer bad';
+
+  badge.textContent = '0 marks';
+  badge.className = 'mark wrong';
+
+ }
+
+ updateScore();
+}
+
+// SCORE
+
+function updateScore() {
+
+ const total = marks.reduce(
+  (s,m) => s + (m === 1 ? 1 : 0),0
+ );
+
+ document.getElementById('score').textContent =
+  `Score: ${total} / ${quiz.length}`;
+
+ document.getElementById('bar').style.width =
+  (total/quiz.length*100) + '%';
+}
+
+// FINISH TEST AND GENERATE CERTIFICATE
+
+function finishTest() {
+
+ const name =
+  document.getElementById('studentName').value.trim();
+
+ const unanswered =
+  marks.filter(m => m === null).length;
+
+ const msg =
+  document.getElementById('testMessage');
+
+ if(unanswered) {
+
+  msg.textContent =
+   `Please check all questions. ${unanswered} question(s) are not checked yet.`;
+
+  msg.className = 'answer bad';
+  return;
+ }
+
+ if(!name) {
+
+  msg.textContent =
+   'Please enter the student name first.';
+
+  msg.className = 'answer bad';
+  return;
+ }
+
+ const total = marks.reduce((s,m) => s+m,0);
+
+ document.getElementById('certName').textContent = name;
+
+ document.getElementById('certScore').textContent =
+  `Score: ${total} / ${quiz.length}`;
+
+ document.getElementById('certDate').textContent =
+  'Date: ' + new Date().toLocaleDateString('en-IN');
+
+ document.getElementById('certificate').style.display =
+  'block';
+
+ document.getElementById('printBtn').disabled = false;
+
+ document.getElementById('certStatus').textContent =
+  'Congratulations! Your certificate is ready.';
+
+ msg.textContent =
+  `Test completed. You scored ${total} out of ${quiz.length}. Certificate unlocked!`;
+
+ msg.className = 'answer good';
+
+ showTab('certificatePanel');
+}
+
+// RESET TEST
+
+function resetTest() {
+
+ marks = Array(quiz.length).fill(null);
+
+ renderQuiz();
+
+ document.getElementById('testMessage').textContent = '';
+
+ document.getElementById('certificate').style.display =
+  'none';
+
+ document.getElementById('printBtn').disabled = true;
+
+ document.getElementById('certStatus').textContent =
+  'Your certificate will appear after the test is completed.';
+}
+
+renderQuiz();
+
+</script>
+
+</body>
+</html>
